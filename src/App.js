@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import fire from './fire'
+import getFirebase from './fire'
 import { BrowserRouter as Router, Route} from 'react-router-dom'
 import Home from "./components/Home"
 import Login from "./components/Login/Login"
