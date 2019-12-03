@@ -2,14 +2,24 @@ const functions = require('firebase-functions');
 var admin = require("firebase-admin")
 const config = functions.config();
 admin.initializeApp(config.firebase);
+// const gcs = require('@google-cloud/storage')
+
+// const BUCKET_NAME = 'hire-ez.appspot.com';
+// const storageRef = firebase.storage().ref();
+
+
+
 
 exports.addToInventory = functions.https.onCall(async (data, context) => {
     let {itemObject} = data
     
     try {
-        await admin.database().ref('/inventory/').push(itemObject)
+        let newItemRef = await admin.database().ref('/inventory/').push(itemObject)
+        let key = await newItemRef.key
+        console.log("newItemRef.key: ", newItemRef.key, key)
         return {
-            success: true
+            success: true,
+            ref: key
         }
     } catch (error) {
         console.log(error)

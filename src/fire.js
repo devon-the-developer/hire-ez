@@ -4,6 +4,7 @@ import "firebase/auth";
 import "firebase/app";
 import "firebase/database";
 import "firebase/functions";
+import "firebase/storage"
 
 var firebaseConfig = {
   apiKey: process.env.REACT_APP_APIKEY,

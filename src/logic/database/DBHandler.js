@@ -1,12 +1,20 @@
 import getFirebase from '../../fire'
 let firebase = getFirebase()
 
-const addItemToInventory = async(itemName, itemType) => {
+const addItemToInventory = async(itemName, itemType, itemImage) => {
     try{
-        await firebase.functions().httpsCallable('addToInventory')({
-        itemObject: {name: itemName, cost: "$5", type: itemType}
+        let returned = await firebase.functions().httpsCallable('addToInventory')({
+            itemObject: {
+                name: itemName, 
+                cost: "$5", 
+                type: itemType, 
+            }
         })
-        console.log("Object Added")
+        let {ref} = returned.data 
+        console.log("Object Added with Ref", ref)
+        console.log("itemImage", itemImage)
+        await firebase.storage().ref("/inventory_items/images/" + ref).put(itemImage)
+        console.log("image added")
     } catch (error) {
         console.log("Error: ", error.message)
     }
