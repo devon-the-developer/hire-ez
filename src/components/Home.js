@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import getFirebase from '../fire'
+import './Home.css'
 import { addItemToInventory, getAllItems } from "../logic/database/DBHandler";
 
 let firebase = getFirebase()
@@ -25,21 +26,41 @@ const Home = () => {
        setLoading(true)
     }
 
+    const handleRemoveObject = async(event) => {
+
+    }
+
     console.log(loading)
     console.log("Inventory: ", inventory);
     return (
-        <Fragment>
-            <h1>Home</h1>
-            <h2>Store Inventory:</h2>
-            <br />
-            {loading ? "Loading..." : inventory.map((item, index) => ( <p key={index}>
-                Item Name: {item.name} Key: {item.key}
-             </p>))}
-            <button onClick={() => handleAddObjectClick()} >Add Object</button>
-            <button onClick={() => firebase.auth().signOut()}>Sign out</button>
-            <p>Currently using {React.version}</p>
-        </Fragment>
-    )
+      <div style={{ margin: "50px" }}>
+        <h1>Home</h1>
+        <h2>Store Inventory:</h2>
+        <br />
+        <div className="inventory">
+            {loading
+                ? "Loading..."
+                : inventory.map((item, index) => (
+                    <Fragment>
+                    <p className="inventory-item" key={index}>
+                        Item Name: {item.name} Key: {item.key}
+                        <button
+                        style={{ float: "right" }}
+                        onClick={() => handleRemoveObject()}
+                        >
+                        Remove Item
+                        </button>
+                    </p>
+                    </Fragment>
+                ))
+            }
+        </div>
+        <br />
+        <button onClick={() => handleAddObjectClick()}>Add Object</button>
+        <button onClick={() => firebase.auth().signOut()}>Sign out</button>
+        <p>Currently using {React.version}</p>
+      </div>
+    );
 }
 
 
