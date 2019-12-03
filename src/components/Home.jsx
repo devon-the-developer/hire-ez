@@ -1,13 +1,16 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import getFirebase from '../fire'
 import './Home.css'
-import { addItemToInventory, removeItemFromInventory, getAllItems } from "../logic/database/DBHandler";
+import { removeItemFromInventory, getAllItems } from "../logic/database/DBHandler";
+
+import AddItem from './AddItem'
 
 let firebase = getFirebase()
 
 const Home = () => {
     let [inventory, setInventory] = useState([])
     let [loading, setLoading] = useState(true)
+    let [addItemTabOpen, setAddItemTabOpen] = useState(false)
 
     useEffect(() => {
         let randomfunc = async () => {
@@ -21,13 +24,13 @@ const Home = () => {
 
     }, [loading])
 
-    const handleAddObject = async() => {
-       await addItemToInventory();
-       setLoading(true)
-    }
-
     const handleRemoveObject = async(objectKey) => {
         await removeItemFromInventory(objectKey)
+        setLoading(true)
+    }
+
+    const handleOnFinish = () => {
+        setAddItemTabOpen(false)
         setLoading(true)
     }
 
@@ -57,7 +60,7 @@ const Home = () => {
             }
         </div>
         <br />
-        <button onClick={() => handleAddObject()}>Add Object</button>
+        {!addItemTabOpen ? <button onClick={() => setAddItemTabOpen(true)}>Add Object</button> : <AddItem onFinish={() => handleOnFinish()} />}
         <button onClick={() => firebase.auth().signOut()}>Sign out</button>
         <p>Currently using {React.version}</p>
       </div>

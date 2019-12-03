@@ -1,10 +1,10 @@
 import getFirebase from '../../fire'
 let firebase = getFirebase()
 
-const addItemToInventory = async() => {
+const addItemToInventory = async(itemName, itemType) => {
     try{
         await firebase.functions().httpsCallable('addToInventory')({
-        itemObject: {name: "Object", cost: "$5"}
+        itemObject: {name: itemName, cost: "$5", type: itemType}
         })
         console.log("Object Added")
     } catch (error) {
