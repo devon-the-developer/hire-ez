@@ -1,7 +1,5 @@
-// const getFirebase = require("../../fire")
 import getFirebase from '../../fire'
 let firebase = getFirebase()
-// const firebase = getFirebase();
 
 const addItemToInventory = async() => {
     try{
@@ -11,6 +9,17 @@ const addItemToInventory = async() => {
         console.log("Object Added")
     } catch (error) {
         console.log("Error: ", error.message)
+    }
+}
+
+const removeItemFromInventory = async(objectKey) => {
+    try {
+        await firebase.functions().httpsCallable('removeFromInventory')({
+            itemKey: objectKey
+        })
+        console.log("Object with key " + objectKey + " removed")
+    } catch (error) {
+        console.log("Error removing " + objectKey + " from inventory: ", error.message);
     }
 }
     
@@ -25,16 +34,19 @@ const getAllItems = async() => {
           .once("value", snapshot => {
             let val = snapshot.val()
             let entries = Object.entries(val)
-            
+
             entries.forEach((item) => {
                 item[1].key = item[0]
                 ret.push(item[1])
             })
           });
-          console.log(ret);
           return ret;
     } catch (error) {
         console.log("Error in getAllItems: ", error.message)
     }
 }
-export {addItemToInventory, getAllItems}
+export {
+    addItemToInventory,
+    removeItemFromInventory,
+    getAllItems
+    }

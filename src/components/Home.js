@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import getFirebase from '../fire'
 import './Home.css'
-import { addItemToInventory, getAllItems } from "../logic/database/DBHandler";
+import { addItemToInventory, removeItemFromInventory, getAllItems } from "../logic/database/DBHandler";
 
 let firebase = getFirebase()
 
@@ -21,13 +21,14 @@ const Home = () => {
 
     }, [loading])
 
-    const handleAddObjectClick = async() => {
+    const handleAddObject = async() => {
        await addItemToInventory();
        setLoading(true)
     }
 
-    const handleRemoveObject = async(event) => {
-
+    const handleRemoveObject = async(objectKey) => {
+        await removeItemFromInventory(objectKey)
+        setLoading(true)
     }
 
     console.log(loading)
@@ -46,7 +47,7 @@ const Home = () => {
                         Item Name: {item.name} Key: {item.key}
                         <button
                         style={{ float: "right" }}
-                        onClick={() => handleRemoveObject()}
+                        onClick={() => handleRemoveObject(item.key)}
                         >
                         Remove Item
                         </button>
@@ -56,7 +57,7 @@ const Home = () => {
             }
         </div>
         <br />
-        <button onClick={() => handleAddObjectClick()}>Add Object</button>
+        <button onClick={() => handleAddObject()}>Add Object</button>
         <button onClick={() => firebase.auth().signOut()}>Sign out</button>
         <p>Currently using {React.version}</p>
       </div>
