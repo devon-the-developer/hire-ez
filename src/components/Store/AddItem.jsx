@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react'
-import { addItemToInventory } from '../logic/database/DBHandler'
+import { addItemToInventory } from '../../logic/database/DBHandler'
  
 const AddItem = (props) => {
     let [name, setName] = useState(null)
