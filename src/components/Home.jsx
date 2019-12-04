@@ -12,15 +12,18 @@ const Home = () => {
     let [loading, setLoading] = useState(true)
     let [addItemTabOpen, setAddItemTabOpen] = useState(false)
 
+
     useEffect(() => {
         let randomfunc = async () => {
             let allItems = await getAllItems()
             console.log("allItems", allItems)
             await setInventory(allItems)
+
             setLoading(false);
         }
 
         randomfunc()
+        
 
     }, [loading])
 
@@ -47,6 +50,7 @@ const Home = () => {
                 : inventory.map((item, index) => (
                     <Fragment>
                     <p className="inventory-item" key={index}>
+                        <img src={item.imageUrl} width="150px" height="150px" alt=""/>
                         Item Name: {item.name} Key: {item.key}
                         <button
                         style={{ float: "right" }}

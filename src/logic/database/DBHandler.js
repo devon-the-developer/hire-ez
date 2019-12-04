@@ -1,5 +1,6 @@
 import getFirebase from '../../fire'
 let firebase = getFirebase()
+let storage = firebase.storage()
 
 const addItemToInventory = async(itemName, itemType, itemImage) => {
     try{
@@ -14,6 +15,7 @@ const addItemToInventory = async(itemName, itemType, itemImage) => {
         console.log("Object Added with Ref", ref)
         console.log("itemImage", itemImage)
         await firebase.storage().ref("/inventory_items/images/" + ref).put(itemImage)
+        await addImageToItem(ref)
         console.log("image added")
     } catch (error) {
         console.log("Error: ", error.message)
@@ -53,8 +55,20 @@ const getAllItems = async() => {
         console.log("Error in getAllItems: ", error.message)
     }
 }
+
+
+const addImageToItem = async(itemKey) => {
+    let downloadUrl = await storage.ref('/inventory_items/images/' + itemKey).getDownloadURL()
+    console.log("downloadUrl: ",downloadUrl)
+
+    let imageUrl = downloadUrl.toString()
+    await firebase.functions().httpsCallable('addImageUrlToItem')({
+        imageUrl, itemKey
+    })
+}
+
 export {
     addItemToInventory,
     removeItemFromInventory,
     getAllItems
-    }
+}
