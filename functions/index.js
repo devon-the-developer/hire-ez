@@ -3,6 +3,29 @@ var admin = require("firebase-admin")
 const config = functions.config();
 admin.initializeApp(config.firebase);
 
+exports.isStoreManager = functions.https.onCall(async (data, context) => {
+    let currentUserUid = context.auth.uid
+    console.log({currentUserUid})
+
+    try {
+
+        let storeManagerSnap = await admin.database().ref('/store_managers/' + currentUserUid).once("value")
+
+        let storeManager = storeManagerSnap.val()
+
+        console.log({storeManager})
+        let ret = storeManagerSnap.exists()
+
+        return ret
+
+    } catch (error) {
+        console.log(error)
+        throw new Error("Error checking if user " + currentUserUid + 
+         "is a storeManager: ", error)
+    }
+
+})
+
 exports.addToInventory = functions.https.onCall(async (data, context) => {
     let {itemObject} = data
     

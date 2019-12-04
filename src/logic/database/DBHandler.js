@@ -2,6 +2,16 @@ import getFirebase from '../../fire'
 let firebase = getFirebase()
 let storage = firebase.storage()
 
+const isUserStoreManager = async() => {
+    try {
+        let isStoreManager = await firebase.functions().httpsCallable('isStoreManager')({})
+        console.log({isStoreManager})
+        return isStoreManager.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 const addItemToInventory = async(itemName, itemType, itemImage) => {
     try{
         let returned = await firebase.functions().httpsCallable('addToInventory')({
@@ -70,5 +80,6 @@ const addImageToItem = async(itemKey) => {
 export {
     addItemToInventory,
     removeItemFromInventory,
-    getAllItems
+    getAllItems,
+    isUserStoreManager
 }

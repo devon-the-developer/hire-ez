@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import { getAllItems, removeItemFromInventory } from './../../logic/database/DBHandler'
+import { getAllItems, removeItemFromInventory } from '../../logic/database/DBHandler'
 import AddItem from './AddItem'
 
 const Inventory = () => {
@@ -9,14 +9,19 @@ const Inventory = () => {
 
 
     useEffect(() => {
+        let isSubscribed = true
         let loadInventoryItems = async () => {
             let allItems = await getAllItems()
             console.log("allItems", allItems)
-            await setInventory(allItems)
-            setLoading(false);
+            if(isSubscribed){ 
+                await setInventory(allItems)
+                setLoading(false)
+            }
         }
 
         loadInventoryItems()
+
+        return () => isSubscribed = false
 
     }, [loading])
 
@@ -35,7 +40,6 @@ const Inventory = () => {
             {loading
                 ? "Loading..."
                 : inventory.map((item, index) => (
-                    <Fragment>
                         <p className="inventory-item" key={index}>
                             <img src={item.imageUrl} width="150px" height="150px" alt="" />
                             Item Name: {item.name} Key: {item.key}
@@ -46,7 +50,6 @@ const Inventory = () => {
                                 Remove Item
                         </button>
                         </p>
-                    </Fragment>
                 ))
             }
         </div>
