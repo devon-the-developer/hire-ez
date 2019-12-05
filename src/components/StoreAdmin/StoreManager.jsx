@@ -10,7 +10,6 @@ const StoreManager = () => {
         <Fragment>
             <Inventory />
             <button onClick={() => firebase.auth().signOut()}>Sign out</button>
-            <p>Currently using React Version {React.version}</p>
         </Fragment>
     )
 }

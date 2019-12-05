@@ -1,4 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
+import { Row, Col } from "react-simple-flex-grid";
+import "react-simple-flex-grid/lib/main.css";
 import { getAllItems, removeItemFromInventory } from '../../logic/database/DBHandler'
 import AddItem from './AddItem'
 
@@ -35,27 +37,52 @@ const Inventory = () => {
         setLoading(true)
     }
 
-    return (<Fragment>
+    return (
+      <Fragment>
         <div className="inventory">
-            {loading
-                ? "Loading..."
-                : inventory.map((item, index) => (
-                        <p className="inventory-item" key={index}>
-                            <img src={item.imageUrl} width="150px" height="150px" alt="" />
-                            Item Name: {item.name} Key: {item.key}
-                            <button
-                                style={{ float: "right" }}
-                                onClick={() => handleRemoveObject(item.key)}
-                            >
-                                Remove Item
+          {loading
+            ? "Loading..."
+            : inventory.map((item, index) => (
+                <div className="inventory-item" key={index}>
+                    <Row gutter={10} align="middle">
+                        <Col span={4}>
+                            <img
+                                src={item.imageUrl}
+                                style={{ borderRadius: "25px" }}
+                                width="130px"
+                                height="130px"
+                                alt=""
+                            />
+                        </Col>
+                        <Col span={4}>
+                            <p>
+                                Item Name: {item.name}
+                                <br /> 
+                                Type: {item.type}
+                                <br />
+                                Key: {item.key}
+                            </p>
+                        </Col>
+                        <Col span={4}>
+                        <button
+                            style={{ float: "right" }}
+                            className="redButton"
+                            onClick={() => handleRemoveObject(item.key)}
+                        >
+                        Remove Item
                         </button>
-                        </p>
-                ))
-            }
+                        </Col>
+                    </Row>
+                </div>
+              ))}
         </div>
-        { !addItemTabOpen ? <button onClick={() => setAddItemTabOpen(true)}>Add Object</button> : <AddItem onFinish={() => handleOnFinish()} /> }
-    </Fragment>
-)
+        {!addItemTabOpen ? (
+          <button onClick={() => setAddItemTabOpen(true)}>Add Item</button>
+        ) : (
+          <AddItem onFinish={() => handleOnFinish()} />
+        )}
+      </Fragment>
+    );
 }
 
 export default Inventory

@@ -28,6 +28,7 @@ const StoreStock = () => {
     return (
     <Fragment>
         <div className="inventory">
+            <h2>Store Inventory:</h2>
             {loading
                 ? "Loading..."
                 : inventory.map((item, index) => (

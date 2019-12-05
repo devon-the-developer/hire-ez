@@ -22,12 +22,14 @@ const Home = () => {
     }, [])
 
     return (
-      <div style={{ margin: "50px" }}>
-        <h1>Home</h1>
-        <h2>Store Inventory:</h2>
-        <br />
+      <Fragment>
+        <div className="header">
+          <h1>Hire EZ</h1>
+          <h2>Store Inventory:</h2>
+        </div>
         {isStoreManager ? <StoreManager /> : <StoreStock />}
-      </div>
+        <p style={{textAlign: "center"}}>Currently using React Version {React.version}</p>
+      </Fragment>
     );
 }
 
