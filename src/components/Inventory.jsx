@@ -1,10 +1,12 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { Row, Col } from "react-simple-flex-grid";
 import "react-simple-flex-grid/lib/main.css";
-import { getAllItems, removeItemFromInventory } from '../../logic/database/DBHandler'
-import AddItem from './AddItem'
+import { getAllItems } from '../logic/database/DBHandler'
+import AddItem from './StoreAdmin/AddItem'
+import ManagerItemOptions from './StoreAdmin/ManagerItemOptions'
+import CustomerItemOptions from './StoreFront/CustomerItemOptions';
 
-const Inventory = () => {
+const Inventory = (props) => {
     let [inventory, setInventory] = useState([])
     let [loading, setLoading] = useState(true)
     let [addItemTabOpen, setAddItemTabOpen] = useState(false)
@@ -27,13 +29,12 @@ const Inventory = () => {
 
     }, [loading])
 
-    const handleRemoveObject = async (itemKey) => {
-        await removeItemFromInventory(itemKey)
+    const handleOnFinish = () => {
+        setAddItemTabOpen(false)
         setLoading(true)
     }
 
-    const handleOnFinish = () => {
-        setAddItemTabOpen(false)
+    const handleReloadItems = () => {
         setLoading(true)
     }
 
@@ -64,13 +65,11 @@ const Inventory = () => {
                             </p>
                         </Col>
                         <Col span={4}>
-                        <button
-                            style={{ float: "right" }}
-                            className="redButton"
-                            onClick={() => handleRemoveObject(item.key)}
-                        >
-                        Remove Item
-                        </button>
+                        {props.storeManager ? 
+                            <ManagerItemOptions currentItemKey={item.key} onReload={() => handleReloadItems()} /> 
+                            :
+                            <CustomerItemOptions />
+                         }
                         </Col>
                     </Row>
                 </div>
