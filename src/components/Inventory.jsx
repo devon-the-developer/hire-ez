@@ -38,13 +38,22 @@ const Inventory = (props) => {
         setLoading(true)
     }
 
+    const handleItemSelection = (selectedItemKey) => {
+
+        console.log("recieved selected key: " + selectedItemKey)
+        let selectedItem = document.getElementById(selectedItemKey)
+        console.log({selectedItem})
+        selectedItem.className = selectedItem.className === "inventory-item" ? "selected-item" : "inventory-item"
+
+    }
+
     return (
       <Fragment>
         <div className="inventory">
           {loading
             ? "Loading..."
             : inventory.map((item, index) => (
-                <div className="inventory-item" key={index}>
+                <div className="inventory-item" id={item.key} key={index}>
                     <Row gutter={10} align="middle">
                         <Col span={4}>
                             <img
@@ -68,7 +77,7 @@ const Inventory = (props) => {
                         {props.storeManager ? 
                             <ManagerItemOptions currentItemKey={item.key} onReload={() => handleReloadItems()} /> 
                             :
-                            <CustomerItemOptions />
+                            <CustomerItemOptions onSelect={() => handleItemSelection(item.key)} />
                          }
                         </Col>
                     </Row>

@@ -1,11 +1,14 @@
 import React from 'react'
+import HireItem from './HireItem'
 
-const CustomerItemOptions = () => {
+const CustomerItemOptions = (props) => {
     return (
-        <div>
-            
-        </div>
-    )
+      <div>
+        <HireItem
+          onSelect={props.onSelect}
+        />
+      </div>
+    );
 }
 
 export default CustomerItemOptions
