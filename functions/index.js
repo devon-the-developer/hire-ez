@@ -18,12 +18,12 @@ exports.isStoreManager = functions.https.onCall(async (data, context) => {
 
         return ret
 
-    } catch (error) {
-        console.log(error)
-        throw new Error("Error checking if user " + currentUserUid + 
-         "is a storeManager: ", error)
+    } catch (err) {
+        console.log(
+          "Error checking if user " + currentUserUid + "is a storeManager: ", err
+        );
+        return { error: "Error In: isStoreManager" };
     }
-
 })
 
 exports.addToInventory = functions.https.onCall(async (data, context) => {
@@ -36,9 +36,9 @@ exports.addToInventory = functions.https.onCall(async (data, context) => {
             success: true,
             ref: key
         }
-    } catch (error) {
-        console.log(error)
-        throw new Error("ERROR: ", error.message)
+    } catch (err) {
+        console.log("Error adding Item: " + itemObject + " to database: ", err)
+        return { error: "Error In: addToInventory" }
     }
 })
 
@@ -50,9 +50,9 @@ exports.removeFromInventory = functions.https.onCall(async (data, context) => {
         return {
             success: true
         }
-    } catch (error) {
-        console.log(error)
-        throw new Error("Error: ", error.message)
+    } catch (err) {
+        console.log("Error removing Item: " + itemKey + " from database: ", err);
+        return { error: "Error In: removeFromInventory"}
     }
 })
 
@@ -67,7 +67,7 @@ exports.addImageUrlToItem = functions.https.onCall(async (data, context) => {
             success: true
         }
     } catch (err) {
-        console.log(err)
-        throw new Error("Error adding ImageUrl of " + imageUrl + " To ", itemKey + " : ", err)
+        console.log("Error adding ImageUrl of " + imageUrl + " To " + itemKey + " : ", err);
+        return { error: "Error In: addImageUrlToItem"}
     }
 })
