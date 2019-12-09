@@ -1,9 +1,9 @@
 import React from 'react'
 
-const HireItems = () => {
+const HireItems = (props) => {
     return (
         <div>
-            <button >Hire Selected Items</button>
+            <button onClick={() => console.log(props.hireList)} >Hire Selected Items</button>
         </div>
     )
 }

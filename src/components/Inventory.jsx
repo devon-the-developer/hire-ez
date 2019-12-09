@@ -9,11 +9,10 @@ import CustomerItemOptions from './StoreFront/CustomerItemOptions';
 
 const Inventory = (props) => {
 
-    console.log()
-
     let [inventory, setInventory] = useState([])
     let [loading, setLoading] = useState(true)
     let [addItemTabOpen, setAddItemTabOpen] = useState(false)
+    let [itemHireList, setItemHireList] = useState([])
 
 
     useEffect(() => {
@@ -47,8 +46,19 @@ const Inventory = (props) => {
         console.log("recieved selected key: " + selectedItemKey)
         let selectedItem = document.getElementById(selectedItemKey)
         console.log({selectedItem})
-        selectedItem.className = selectedItem.className === "inventory-item" ? "selected-item" : "inventory-item"
-
+        if (selectedItem.className === "inventory-item"){
+            selectedItem.className = "selected-item"
+            let newHireList = itemHireList
+            newHireList.push(selectedItemKey)
+            // let newHireList = [prevHireList + selectedItemKey]
+            setItemHireList(newHireList)
+        } else {
+            selectedItem.className = "inventory-item"
+            let prevHireList = itemHireList
+            let newHireList = prevHireList.filter(itemKey => itemKey !== selectedItemKey)
+            setItemHireList(newHireList)
+        }
+        console.log({itemHireList})
     }
 
     return (
@@ -92,7 +102,7 @@ const Inventory = (props) => {
           <button onClick={() => setAddItemTabOpen(true)}>Add Item</button>
         ) : (
            <AddItem onFinish={() => handleOnFinish()} /> 
-        )) : <HireItems />}
+        )) : <HireItems hireList={itemHireList}/>}
       </Fragment>
     );
 }
