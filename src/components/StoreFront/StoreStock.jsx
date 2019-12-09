@@ -7,7 +7,7 @@ const StoreStock = () => {
 
     return (
       <Fragment>
-        <Inventory />
+        <Inventory storeManager={false} />
         <button onClick={() => firebase.auth().signOut()}>Sign out</button>
       </Fragment>
     );

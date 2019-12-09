@@ -1,10 +1,10 @@
 import React from 'react'
-import HireItem from './HireItem'
+import SelectItem from './SelectItem'
 
 const CustomerItemOptions = (props) => {
     return (
       <div>
-        <HireItem
+        <SelectItem
           onSelect={props.onSelect}
         />
       </div>

@@ -3,10 +3,14 @@ import { Row, Col } from "react-simple-flex-grid";
 import "react-simple-flex-grid/lib/main.css";
 import { getAllItems } from '../logic/database/DBHandler'
 import AddItem from './StoreAdmin/AddItem'
+import HireItems from './StoreFront/HireItems'
 import ManagerItemOptions from './StoreAdmin/ManagerItemOptions'
 import CustomerItemOptions from './StoreFront/CustomerItemOptions';
 
 const Inventory = (props) => {
+
+    console.log()
+
     let [inventory, setInventory] = useState([])
     let [loading, setLoading] = useState(true)
     let [addItemTabOpen, setAddItemTabOpen] = useState(false)
@@ -77,18 +81,18 @@ const Inventory = (props) => {
                         {props.storeManager ? 
                             <ManagerItemOptions currentItemKey={item.key} onReload={() => handleReloadItems()} /> 
                             :
-                            <CustomerItemOptions onSelect={() => handleItemSelection(item.key)} />
+                            <CustomerItemOptions onSelect={() => handleItemSelection(item.key)}  />
                          }
                         </Col>
                     </Row>
                 </div>
               ))}
         </div>
-        {!addItemTabOpen ? (
+        {props.storeManager ? (!addItemTabOpen ? (
           <button onClick={() => setAddItemTabOpen(true)}>Add Item</button>
         ) : (
-          <AddItem onFinish={() => handleOnFinish()} />
-        )}
+           <AddItem onFinish={() => handleOnFinish()} /> 
+        )) : <HireItems />}
       </Fragment>
     );
 }
