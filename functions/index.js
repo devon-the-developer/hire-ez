@@ -71,3 +71,43 @@ exports.addImageUrlToItem = functions.https.onCall(async (data, context) => {
         return { error: "Error In: addImageUrlToItem"}
     }
 })
+
+const createHireReceipt = async(itemKeys, userUid) => {
+    if (!itemKeys) {
+        return new Error ("No items selected for hire")
+    }
+    let hireReceipt = {
+        hireToUser: userUid,
+        itemsHired: itemKeys
+    }
+    try {
+        let newReceiptRef = await admin.database().ref('/hire_receipts/').push(hireReceipt)
+        let newReceiptKey = newReceiptRef.key
+        return newReceiptKey
+    } catch (err) {
+        return new Error ('Error Creating Hire Receipt: ', err)
+    }
+
+}
+
+const addReceiptToItem = (itemKey, receiptUid) => {
+    return admin.database().ref('/inventory/').child(itemKey).update({"hireReceipt": receiptUid})
+}
+
+exports.hireItemsToUser = functions.https.onCall(async (data, context) => {
+    let { itemKeys } = data
+    let currentUserUid = context.auth.uid
+    
+    try {
+        let hireReceiptUid = await createHireReceipt(itemKeys, currentUserUid)
+
+        await itemKeys.forEach(itemKey => addReceiptToItem(itemKey, hireReceiptUid))
+
+        return {
+            success: true
+        }
+    } catch (err) {
+        console.log("Error Hiring items: ", err);
+        return { error: "Error In: HireItems" };
+    }
+})

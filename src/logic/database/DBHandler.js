@@ -77,9 +77,16 @@ const addImageToItem = async(itemKey) => {
     })
 }
 
+const hireItems = (itemKeys) => {
+    return firebase.functions().httpsCallable('hireItemsToUser')({
+        itemKeys
+    })
+}
+
 export {
     addItemToInventory,
     removeItemFromInventory,
     getAllItems,
-    isUserStoreManager
+    isUserStoreManager,
+    hireItems
 }
