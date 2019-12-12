@@ -7,6 +7,10 @@
     text-align: center;
 }
 
+.nav {
+    text-align: center;
+}
+
 .unavailable-item {
     background: #f0f0f0;
     padding: 10px;
@@ -84,6 +88,30 @@ button:hover {
     font-size: 16px;
 }
 
+.navButton {
+    background-color: #ffffff; 
+    border-bottom:2px solid black;
+    border-radius: 5px;
+    margin: auto 5px auto 5px;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.navButton:hover {
+    background-color: #e1e1e1; 
+    border-bottom:2px solid black;
+    border-radius: 5px;
+    margin: auto 5px auto 5px;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
 .redButton {
     background-color: #c7442c; /* Red */
     border-radius: 5px;
@@ -105,6 +133,8 @@ button:hover {
     display: inline-block;
     font-size: 16px;
 }
+
+
 
 .optionsBox {
     background: #ffffff;
