@@ -66,43 +66,80 @@ const Inventory = (props) => {
         <div className="inventory">
           {loading
             ? "Loading..."
-            : inventory.map((item, index) => (
-                <div className="inventory-item" id={item.key} key={index}>
+            : inventory.map((item, index) =>
+                item.hireReceipt ? (
+                  <div className="unavailable-item" id={item.key} key={index}>
                     <Row gutter={10} align="middle">
-                        <Col span={4}>
-                            <img
-                                src={item.imageUrl}
-                                style={{ borderRadius: "25px" }}
-                                width="130px"
-                                height="130px"
-                                alt=""
-                            />
-                        </Col>
-                        <Col span={4}>
-                            <p>
-                                Item Name: {item.name}
-                                <br /> 
-                                Type: {item.type}
-                                <br />
-                                Key: {item.key}
-                            </p>
-                        </Col>
-                        <Col span={4}>
-                        {props.storeManager ? 
-                            <ManagerItemOptions currentItemKey={item.key} onReload={() => handleReloadItems()} /> 
-                            :
-                            <CustomerItemOptions onSelect={() => handleItemSelection(item.key)}  />
-                         }
-                        </Col>
+                      <Col span={4}>
+                        <img
+                          src={item.imageUrl}
+                          style={{ borderRadius: "25px" }}
+                          width="130px"
+                          height="130px"
+                          alt=""
+                        />
+                      </Col>
+                      <Col span={4}>
+                        <p>
+                          Item Name: {item.name}
+                          <br />
+                          Type: {item.type}
+                          <br />
+                          Key: {item.key}
+                        </p>
+                      </Col>
+                      <Col span={4}>
+                        <p style={{ float: "right" }}>This item is hired out</p>
+                      </Col>
                     </Row>
-                </div>
-              ))}
+                  </div>
+                ) : (
+                  <div className="inventory-item" id={item.key} key={index}>
+                    <Row gutter={10} align="middle">
+                      <Col span={4}>
+                        <img
+                          src={item.imageUrl}
+                          style={{ borderRadius: "25px" }}
+                          width="130px"
+                          height="130px"
+                          alt=""
+                        />
+                      </Col>
+                      <Col span={4}>
+                        <p>
+                          Item Name: {item.name}
+                          <br />
+                          Type: {item.type}
+                          <br />
+                          Key: {item.key}
+                        </p>
+                      </Col>
+                      <Col span={4}>
+                        {props.storeManager ? (
+                          <ManagerItemOptions
+                            currentItemKey={item.key}
+                            onReload={() => handleReloadItems()}
+                          />
+                        ) : (
+                          <CustomerItemOptions
+                            onSelect={() => handleItemSelection(item.key)}
+                          />
+                        )}
+                      </Col>
+                    </Row>
+                  </div>
+                )
+              )}
         </div>
-        {props.storeManager ? (!addItemTabOpen ? (
-          <button onClick={() => setAddItemTabOpen(true)}>Add Item</button>
+        {props.storeManager ? (
+          !addItemTabOpen ? (
+            <button onClick={() => setAddItemTabOpen(true)}>Add Item</button>
+          ) : (
+            <AddItem onFinish={() => handleOnFinish()} />
+          )
         ) : (
-           <AddItem onFinish={() => handleOnFinish()} /> 
-        )) : <HireItems hireList={itemHireList}/>}
+          <HireItems hireList={itemHireList} />
+        )}
       </Fragment>
     );
 }

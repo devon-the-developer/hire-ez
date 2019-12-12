@@ -96,19 +96,28 @@ const addReceiptToItem = (itemKey, receiptUid) => {
 
 const checkItemsFree = async(itemKeys) => {
     let itemsAlreadyHired = []
+    //ESLint doesn't like await in for loop so will return to try another way around it
 
     for(let i = 0; i < itemKeys.length; i++){ 
-        let hireReceipt = admin
+
+        // eslint-disable-line no-await-in-loop
+        let hireReceiptSnapshot = await admin // eslint-disable-line no-await-in-loop
           .database()
           .ref("/inventory/" + itemKeys[i])
           .child("hire_receipt")
           .once("value");
+
+        let hireReceipt = hireReceiptSnapshot.val()
+        console.log({hireReceipt})
         if(hireReceipt){
             itemsAlreadyHired.push(itemKeys[i])
         }
     }
+    if (itemsAlreadyHired.length > 0){
+        return itemsAlreadyHired
+    }
 
-    return itemsAlreadyHired
+    return null
 }
 
 exports.hireItemsToUser = functions.https.onCall(async (data, context) => {
