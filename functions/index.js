@@ -94,11 +94,36 @@ const addReceiptToItem = (itemKey, receiptUid) => {
     return admin.database().ref('/inventory/').child(itemKey).update({"hireReceipt": receiptUid})
 }
 
+const checkItemsFree = async(itemKeys) => {
+    let itemsAlreadyHired = []
+
+    for(let i = 0; i < itemKeys.length; i++){ 
+        let hireReceipt = admin
+          .database()
+          .ref("/inventory/" + itemKeys[i])
+          .child("hire_receipt")
+          .once("value");
+        if(hireReceipt){
+            itemsAlreadyHired.push(itemKeys[i])
+        }
+    }
+
+    return itemsAlreadyHired
+}
+
 exports.hireItemsToUser = functions.https.onCall(async (data, context) => {
     let { itemKeys } = data
     let currentUserUid = context.auth.uid
     
     try {
+        let itemsAlreadyHired = await checkItemsFree(itemKeys)
+        console.log({itemsAlreadyHired})
+        if(itemsAlreadyHired) {
+            console.log("items are already hired out")
+            return {
+                error: ("The following items are already hired out: ", itemsAlreadyHired)
+            }
+        }
         let hireReceiptUid = await createHireReceipt(itemKeys, currentUserUid)
 
         await itemKeys.forEach(itemKey => addReceiptToItem(itemKey, hireReceiptUid))

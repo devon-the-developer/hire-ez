@@ -77,10 +77,25 @@ const addImageToItem = async(itemKey) => {
     })
 }
 
-const hireItems = (itemKeys) => {
-    return firebase.functions().httpsCallable('hireItemsToUser')({
-        itemKeys
-    })
+const hireItems = async(itemKeys) => {
+    try {
+        let response = await firebase.functions().httpsCallable('hireItemsToUser')({
+            itemKeys
+        })
+        console.log({response})
+        if(response){
+            console.log(response.data.error)
+            throw new Error ("Items already hired: " + response.data.error)
+        }
+        return {
+            success: true
+        }
+    } catch(err) {
+        console.log(err)
+        return {
+            error: "error hiring items: " + err
+        }
+    }
 }
 
 export {
