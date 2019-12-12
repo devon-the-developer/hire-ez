@@ -14,7 +14,7 @@ const HireItems = (props) => {
         props.onFinish()
     }
     return (
-        <div>
+        <div className="optionsBox">
             <button onClick={handleHireItems}>Hire Selected Items</button>
         </div>
     )

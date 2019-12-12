@@ -67,13 +67,22 @@ const Inventory = (props) => {
                 item.hireReceipt ? (
                   <UnavailableItem item={item} index={index} key={index} />
                 ) : (
-                  <AvailableItem item={item} index={index} onSelection={handleItemSelection} onReload={handleReloadItems} storeManager={props.storeManager} key={index} />
+                  <AvailableItem
+                    item={item}
+                    index={index}
+                    onSelection={handleItemSelection}
+                    onReload={handleReloadItems}
+                    storeManager={props.storeManager}
+                    key={index}
+                  />
                 )
               )}
         </div>
         {props.storeManager ? (
           !addItemTabOpen ? (
-            <button onClick={() => setAddItemTabOpen(true)}>Add Item</button>
+            <div className="optionsBox">
+              <button onClick={() => setAddItemTabOpen(true)}>Add Item</button>
+            </div>
           ) : (
             <AddItem onFinish={() => handleOnFinish()} />
           )

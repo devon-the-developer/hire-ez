@@ -8,7 +8,9 @@ const StoreStock = () => {
     return (
       <Fragment>
         <Inventory storeManager={false} />
+        <div className="optionsBox">
         <button onClick={() => firebase.auth().signOut()}>Sign out</button>
+        </div>
       </Fragment>
     );
 }

@@ -7,11 +7,13 @@ let firebase = getFirebase()
 const StoreManager = () => {
 
     return (
-        <Fragment>
-            <Inventory storeManager={true} />
-            <button onClick={() => firebase.auth().signOut()}>Sign out</button>
-        </Fragment>
-    )
+      <Fragment>
+        <Inventory storeManager={true} />
+        <div className="optionsBox">
+          <button onClick={() => firebase.auth().signOut()}>Sign out</button>
+        </div>
+      </Fragment>
+    );
 }
 
 export default StoreManager
