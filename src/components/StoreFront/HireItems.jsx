@@ -11,6 +11,7 @@ const HireItems = (props) => {
         }
         await hireItems(props.hireList);
         console.log("handled hiring items")
+        props.onFinish()
     }
     return (
         <div>

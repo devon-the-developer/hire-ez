@@ -78,7 +78,7 @@ const Inventory = (props) => {
             <AddItem onFinish={() => handleOnFinish()} />
           )
         ) : (
-          <HireItems hireList={itemHireList} />
+          <HireItems hireList={itemHireList} onFinish={handleReloadItems} />
         )}
       </Fragment>
     );
