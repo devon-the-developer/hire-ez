@@ -99,12 +99,13 @@ const checkItemsFree = async(itemKeys) => {
     //ESLint doesn't like await in for loop so will return to try another way around it
 
     for(let i = 0; i < itemKeys.length; i++){ 
-
+        let currentItemKey = itemKeys[i]
+        console.log({currentItemKey})
         // eslint-disable-line no-await-in-loop
         let hireReceiptSnapshot = await admin // eslint-disable-line no-await-in-loop
           .database()
-          .ref("/inventory/" + itemKeys[i])
-          .child("hire_receipt")
+          .ref("/inventory/" + currentItemKey + "/" )
+          .child("hireReceipt")
           .once("value");
 
         let hireReceipt = hireReceiptSnapshot.val()
