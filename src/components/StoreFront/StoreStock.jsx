@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import getFirebase from '../../fire'
-import Inventory from '../Inventory'
+import Inventory from '../Inventory/Inventory'
 let firebase = getFirebase()
 
 const StoreStock = () => {
