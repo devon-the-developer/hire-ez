@@ -98,10 +98,22 @@ const hireItems = async(itemKeys) => {
     }
 }
 
+const getReceiptList = async() => {
+    console.log("In getReceiptList DB")
+    try {
+        let list = await firebase.functions().httpsCallable('getAllHireReceipts')({})
+        console.log({list})
+        return list
+    } catch(err) {
+        console.log(err)
+    }
+}
+
 export {
     addItemToInventory,
     removeItemFromInventory,
     getAllItems,
     isUserStoreManager,
-    hireItems
+    hireItems,
+    getReceiptList
 }

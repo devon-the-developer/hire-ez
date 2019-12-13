@@ -146,3 +146,16 @@ exports.hireItemsToUser = functions.https.onCall(async (data, context) => {
         return { error: "Error In: HireItems" };
     }
 })
+
+exports.getAllHireReceipts = functions.https.onCall(async (data, context) => {
+    try {
+        let hireReceiptsSnapshot = await admin.database().ref('/hire_receipts/').once("value")
+
+        hireReceipts = hireReceiptsSnapshot.val()
+        console.log({ hireReceipts });
+        return hireReceipts
+    } catch(err) {
+        console.log("error in getAllHireReceipts: ", err)
+        return { error: "Error In: GetAllHireReceipts" }
+    }
+})
