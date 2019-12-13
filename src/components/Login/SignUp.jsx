@@ -22,7 +22,7 @@ const SignUp = ({ history }) => {
   );
 
   return (
-    <div>
+    <div className="optionsBox">
       <h1>Sign up</h1>
       <form onSubmit={handleSignUp}>
         <label>
