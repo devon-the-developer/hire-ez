@@ -103,7 +103,16 @@ const getReceiptList = async() => {
     try {
         let list = await firebase.functions().httpsCallable('getAllHireReceipts')({})
         console.log({list})
-        return list
+        let listEntries = Object.entries(list.data)
+        console.log({listEntries})
+        let ret = []
+        listEntries.forEach((item) => {
+                item[1].key = item[0]
+                ret.push(item[1])
+            }
+        )
+        console.log({ret})
+        return ret
     } catch(err) {
         console.log(err)
     }

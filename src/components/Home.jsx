@@ -25,7 +25,6 @@ const Home = () => {
       <Fragment>
         <div className="header">
           <h1>Hire EZ</h1>
-          <h2>Store Inventory:</h2>
         </div>
         {isStoreManager ? <StoreManager /> : <StoreStock />}
         <p style={{textAlign: "center"}}>Currently using React Version {React.version}</p>

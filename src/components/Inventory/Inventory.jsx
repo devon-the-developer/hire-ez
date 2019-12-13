@@ -61,22 +61,24 @@ const Inventory = (props) => {
     return (
       <Fragment>
         <div className="inventory">
-          {loading
-            ? "Loading..."
-            : inventory.map((item, index) =>
-                item.hireReceipt ? (
-                  <UnavailableItem item={item} index={index} key={index} />
-                ) : (
-                  <AvailableItem
-                    item={item}
-                    index={index}
-                    onSelection={handleItemSelection}
-                    onReload={handleReloadItems}
-                    storeManager={props.storeManager}
-                    key={index}
-                  />
-                )
-              )}
+          {loading ? (
+            <p style={{textAlign: "center"}}>Loading...</p>
+          ) : (
+            inventory.map((item, index) =>
+              item.hireReceipt ? (
+                <UnavailableItem item={item} index={index} key={index} />
+              ) : (
+                <AvailableItem
+                  item={item}
+                  index={index}
+                  onSelection={handleItemSelection}
+                  onReload={handleReloadItems}
+                  storeManager={props.storeManager}
+                  key={index}
+                />
+              )
+            )
+          )}
         </div>
         {props.storeManager ? (
           !addItemTabOpen ? (

@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import Inventory from '../Inventory/Inventory'
 import getFirebase from '../../fire'
-import CurrentReceipts from './CurrentReceipts'
+import Receipts from './Receipts'
 
 let firebase = getFirebase()
 
@@ -21,7 +21,7 @@ const StoreManager = () => {
         {currentTab === "Inventory" ? (
           <Inventory storeManager={true} />
         ) : (
-          <CurrentReceipts />
+          <Receipts />
         )}
         <div className="optionsBox">
           <button onClick={() => firebase.auth().signOut()}>Sign out</button>
