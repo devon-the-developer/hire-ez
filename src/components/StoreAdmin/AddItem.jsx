@@ -20,17 +20,43 @@ const AddItem = (props) => {
     }
 
     return (
-        <Fragment>
-            {error ? <p>{error.message}</p> : 
-                <form>
-                    <label>Name: <input type="text" onChange={(e) => setName(e.target.value)} ></input></label>
-                    <label>Type: <input type="text" onChange={(e) => setType(e.target.value)}  ></input></label>
-                    <label>Image: <input type="file" onChange={(e) => setImage(e.target.files[0])}></input></label>
-                    <button disabled={!name || !type} onClick={handleSubmitForm}>Add This Object</button>
-                </form>
-            }
-        </Fragment>
-    )
+      <div className="optionsBox">
+        {error ? (
+          <p>{error.message}</p>
+        ) : (
+          <form>
+            <label>
+              <strong>Name: </strong>
+              <input
+                type="text"
+                onChange={e => setName(e.target.value)}
+              ></input>
+            </label>
+            <br />
+            <label>
+              <strong>Type: </strong>
+              <input
+                type="text"
+                onChange={e => setType(e.target.value)}
+              ></input>
+            </label>
+            <br />
+            <label>
+              <strong>Image: </strong>
+              <input
+                type="file"
+                onChange={e => setImage(e.target.files[0])}
+              ></input>
+            </label>
+            <br />
+            <br />
+            <button disabled={!name || !type} onClick={handleSubmitForm}>
+              Add This Object
+            </button>
+          </form>
+        )}
+      </div>
+    );
 }
 
 export default AddItem
