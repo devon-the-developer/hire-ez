@@ -118,11 +118,23 @@ const getReceiptList = async() => {
     }
 }
 
+const returnItemsOnReceipt = async(receiptKey) => {
+    try {
+        return firebase.functions().httpsCallable("removeReceipt")({
+            receiptKey
+        })
+    } catch (err) {
+        console.log(err)
+        throw new Error ('Error returning items')
+    }
+}
+
 export {
     addItemToInventory,
     removeItemFromInventory,
     getAllItems,
     isUserStoreManager,
     hireItems,
-    getReceiptList
+    getReceiptList,
+    returnItemsOnReceipt
 }

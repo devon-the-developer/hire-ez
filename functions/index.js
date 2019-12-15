@@ -159,3 +159,26 @@ exports.getAllHireReceipts = functions.https.onCall(async (data, context) => {
         return { error: "Error In: GetAllHireReceipts" }
     }
 })
+
+exports.removeReceipt = functions.https.onCall(async (data, context) => {
+    let { receiptKey } = data
+    let currentUserUid = context.auth.uid
+
+    try {
+        let adminSnapshot = await admin.database().ref('/store_managers/').child(currentUserUid).once('value')
+        if(!adminSnapshot.exists()){
+            return { error: "User does not have permission" }
+        }
+        await admin.database().ref('/hire_receipts/' + receiptKey).remove()
+        return {
+            success: true
+        }
+    } catch (err) {
+        console.log("error removing receipts: ", err)
+        return { error: "Error In: removeReceipt"}
+    }
+})
+
+// const removeReceiptKeyFromItem = functions.database.ref('/hire_receipts/').onDelete((snapshot, context) => {
+
+// })

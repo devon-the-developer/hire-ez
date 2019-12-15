@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import Inventory from '../Inventory/Inventory'
 import getFirebase from '../../fire'
-import Receipts from './Receipts'
+import Receipts from './Receipts/Receipts'
 
 let firebase = getFirebase()
 
