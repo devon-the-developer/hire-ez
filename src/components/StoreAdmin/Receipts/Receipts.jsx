@@ -5,7 +5,7 @@ import RemoveReceipt from './RemoveReceipt'
 
 const Receipts = () => {
     let [loading, setLoading] = useState(true)
-    let [receiptsList, setReceiptsList] = useState([])
+    let [receiptsList, setReceiptsList] = useState(null)
     
     useEffect(() => {
         let isSubscribed = true
@@ -29,29 +29,34 @@ const Receipts = () => {
         console.log("removed")
     }
 
+    console.log({loading, receiptsList})
+
     return (
       <div className="inventory">
         {loading
             ? <p style={{textAlign: "center"}}>Loading...</p>
-            : receiptsList.map((receipt, index) => (
-                <div className="receipt-item" key={index}>
-                    <Row gutter={20} align="middle">
-                        <Col span={6}>
-                            <p>Receipt Code: {receipt.key}</p>
-                            <p>Hired By User: {receipt.hireToUser}</p>
-                            <ul>
-                                Items Hired: <br /> <br />
-                                {receipt.itemsHired.map((hiredItem, index) => (
-                                    <li key={index}>{hiredItem}</li>
-                                ))}
-                            </ul>
-                        </Col>
-                        <Col span={6}>
-                            <RemoveReceipt onClick={() => handleRemoveReceipt(receipt.key)}/>
-                        </Col>
-                    </Row>
-                </div>
-            ))}
+            : null } 
+        {receiptsList ? receiptsList.map((receipt, index) => (
+            <div className="receipt-item" key={index}>
+                <Row gutter={20} align="middle">
+                    <Col span={6}>
+                        <p>Receipt Code: {receipt.key}</p>
+                        <p>Hired By User: {receipt.hireToUser}</p>
+                        <ul>
+                            Items Hired: <br /> <br />
+                            {receipt.itemsHired.map((hiredItem, index) => (
+                                <li key={index}>{hiredItem}</li>
+                            ))}
+                        </ul>
+                    </Col>
+                    <Col span={6}>
+                        <RemoveReceipt onClick={() => handleRemoveReceipt(receipt.key)}/>
+                    </Col>
+                </Row>
+            </div>
+        )) : null}
+        {(!loading && !receiptsList) ? <p style={{textAlign: "center"}}>No Receipts</p> : null }
+
       </div>
     );
 }

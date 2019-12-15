@@ -179,6 +179,7 @@ exports.removeReceipt = functions.https.onCall(async (data, context) => {
     }
 })
 
-// const removeReceiptKeyFromItem = functions.database.ref('/hire_receipts/').onDelete((snapshot, context) => {
-
+// exports.removeReceiptKeyFromItems = functions.database.ref('/hire_receipts/').onDelete((snapshot, context) => {
+//     let deletedReceipt = snapshot.val()
+//     console.log(deletedReceipt)
 // })
