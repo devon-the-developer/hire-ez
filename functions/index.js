@@ -179,7 +179,28 @@ exports.removeReceipt = functions.https.onCall(async (data, context) => {
     }
 })
 
-// exports.removeReceiptKeyFromItems = functions.database.ref('/hire_receipts/').onDelete((snapshot, context) => {
-//     let deletedReceipt = snapshot.val()
-//     console.log(deletedReceipt)
-// })
+exports.removeReceiptKeyFromItems = functions.database.ref('/hire_receipts/{receiptId}').onDelete(async(snapshot, context) => {
+
+    try {
+        let deletedReceipt = snapshot.val()
+        let itemsHired = deletedReceipt.itemsHired
+
+
+
+        console.log({ itemsHired })
+        console.log("context", context.params)
+        console.log({ deletedReceipt })
+
+        for (let i = 0; i < itemsHired.length; i++){
+            admin.database().ref('/inventory/' + itemsHired[i] + "/hireReceipt").remove()
+        }
+
+        return {
+            success: true
+        }
+    } catch (err) {
+        console.log(err)
+        return { error: "Error In: removeReceiptKeyFromItems" }
+    }
+    
+})
