@@ -24,9 +24,14 @@ const Receipts = () => {
     }, [loading])
 
     const handleRemoveReceipt = async(receiptKey) => {
-        console.log("removing receipt: ", receiptKey)
-        await returnItemsOnReceipt(receiptKey)
-        console.log("removed")
+        try {
+            console.log("removing receipt: ", receiptKey)
+            await returnItemsOnReceipt(receiptKey)
+            console.log("removed")
+            setLoading(true)
+        } catch (err) {
+            console.log("Error removing receipt: " + err)
+        }
     }
 
     console.log({loading, receiptsList})
