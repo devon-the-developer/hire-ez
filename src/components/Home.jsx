@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import './Home.css'
+// import './Home.css'
 import StoreManager from './StoreAdmin/StoreManager'
 import StoreStock from './StoreFront/StoreStock'
 import { isUserStoreManager } from '../logic/database/DBHandler'
@@ -23,11 +23,10 @@ const Home = () => {
 
     return (
       <Fragment>
-        <div className="header">
-          <h1>Hire EZ</h1>
-        </div>
         {isStoreManager ? <StoreManager /> : <StoreStock />}
-        <p style={{textAlign: "center"}}>Currently using React Version {React.version}</p>
+        <div className="width-full bg-teal-900 p-4">
+        <p className="width-full text-center text-teal-100">Currently using React Version {React.version}</p>
+        </div>
       </Fragment>
     );
 }

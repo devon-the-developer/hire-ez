@@ -60,9 +60,9 @@ const Inventory = (props) => {
 
     return (
       <Fragment>
-        <div className="inventory">
+        <div className="flex flex-wrap justify-center content-start width-full p-3 min-h-screen bg-gray-100 lg:justify-center">
           {loading ? (
-            <p style={{textAlign: "center"}}>Loading...</p>
+            <p className="text-center">Loading...</p>
           ) : (
             inventory.map((item, index) =>
               item.hireReceipt ? (
@@ -79,18 +79,21 @@ const Inventory = (props) => {
               )
             )
           )}
-        </div>
-        {props.storeManager ? (
-          !addItemTabOpen ? (
-            <div className="optionsBox">
-              <button onClick={() => setAddItemTabOpen(true)}>Add Item</button>
-            </div>
+          {props.storeManager ? (
+            !addItemTabOpen ? (
+              <button
+                className="font-semibold text-xl uppercase border-2 border-green-700 w-64 h-32 bg-green-400 m-2 p-4 rounded-lg shadow-lg sm:w-1/3 md:w-1/3 lg:w-64 hover:bg-green-300"
+                onClick={() => setAddItemTabOpen(true)}
+              >
+                Add Item
+              </button>
+            ) : (
+              <AddItem onFinish={() => handleOnFinish()} />
+            )
           ) : (
-            <AddItem onFinish={() => handleOnFinish()} />
-          )
-        ) : (
-          <HireItems hireList={itemHireList} onFinish={handleReloadItems} />
-        )}
+            <HireItems hireList={itemHireList} onFinish={handleReloadItems} />
+          )}
+        </div>
       </Fragment>
     );
 }

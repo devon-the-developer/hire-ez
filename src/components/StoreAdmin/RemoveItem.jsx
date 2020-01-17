@@ -9,8 +9,8 @@ const RemoveItem = (props) => {
     }
 
     return (
-        <button style={{ float: "right" }}
-            className="redButton"
+        <button 
+            className="border-solid border-gray-800 border rounded my-2 bg-red-500 px-4 py-1 font-medium uppercase"
             onClick={() => handleRemoveObject(props.currentItemKey)}
         >
             Remove Item
