@@ -17,7 +17,7 @@ The app is live at hire-ez.firebaseapp.com
 
 To login to a customer account use the credentials:
 
-User: fake123@fake.com
+User: fake@fake123.com
 Pass: fake123
 
 To login as a manager account use the credentials:
